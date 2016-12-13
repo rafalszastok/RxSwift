@@ -81,6 +81,13 @@
 		B1D899901BF653410027B05C /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8998E1BF653410027B05C /* Timeout.swift */; };
 		B1D899911BF653410027B05C /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8998E1BF653410027B05C /* Timeout.swift */; };
 		B1D899921BF653410027B05C /* Timeout.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1D8998E1BF653410027B05C /* Timeout.swift */; };
+		B5B927011DFEE0FE004FA38D /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B926FA1DFEE0FE004FA38D /* Board.swift */; };
+		B5B927021DFEE0FE004FA38D /* RxSupportCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B926FB1DFEE0FE004FA38D /* RxSupportCode.swift */; };
+		B5B927031DFEE0FE004FA38D /* RxTimeline.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B926FC1DFEE0FE004FA38D /* RxTimeline.swift */; };
+		B5B927041DFEE0FE004FA38D /* TimelineCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B926FD1DFEE0FE004FA38D /* TimelineCircleView.swift */; };
+		B5B927051DFEE0FE004FA38D /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B926FE1DFEE0FE004FA38D /* TimelineView.swift */; };
+		B5B927061DFEE0FE004FA38D /* UIBezier+Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B926FF1DFEE0FE004FA38D /* UIBezier+Arrow.swift */; };
+		B5B927071DFEE0FE004FA38D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B927001DFEE0FE004FA38D /* ViewController.swift */; };
 		C8093CC51B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC61B8A72BE0088E94D /* Cancelable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C491B8A72BE0088E94D /* Cancelable.swift */; };
 		C8093CC71B8A72BE0088E94D /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8093C4B1B8A72BE0088E94D /* AsyncLock.swift */; };
@@ -1485,6 +1492,13 @@
 		AAE623751C82475700FC7801 /* UIProgressView+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIProgressView+Rx.swift"; sourceTree = "<group>"; };
 		B1B7C3BC1BDD39DB0076934E /* TakeLast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeLast.swift; sourceTree = "<group>"; };
 		B1D8998E1BF653410027B05C /* Timeout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timeout.swift; sourceTree = "<group>"; };
+		B5B926FA1DFEE0FE004FA38D /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		B5B926FB1DFEE0FE004FA38D /* RxSupportCode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxSupportCode.swift; sourceTree = "<group>"; };
+		B5B926FC1DFEE0FE004FA38D /* RxTimeline.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxTimeline.swift; sourceTree = "<group>"; };
+		B5B926FD1DFEE0FE004FA38D /* TimelineCircleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineCircleView.swift; sourceTree = "<group>"; };
+		B5B926FE1DFEE0FE004FA38D /* TimelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		B5B926FF1DFEE0FE004FA38D /* UIBezier+Arrow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIBezier+Arrow.swift"; sourceTree = "<group>"; };
+		B5B927001DFEE0FE004FA38D /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C809396D1B8A71760088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C80939E71B8A71840088E94D /* RxCocoa.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxCocoa.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8093BC71B8A71F00088E94D /* RxBlocking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxBlocking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2013,6 +2027,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B5B926F91DFEE0FE004FA38D /* RxTimelines */ = {
+			isa = PBXGroup;
+			children = (
+				B5B926FA1DFEE0FE004FA38D /* Board.swift */,
+				B5B926FB1DFEE0FE004FA38D /* RxSupportCode.swift */,
+				B5B926FC1DFEE0FE004FA38D /* RxTimeline.swift */,
+				B5B926FD1DFEE0FE004FA38D /* TimelineCircleView.swift */,
+				B5B926FE1DFEE0FE004FA38D /* TimelineView.swift */,
+				B5B926FF1DFEE0FE004FA38D /* UIBezier+Arrow.swift */,
+				B5B927001DFEE0FE004FA38D /* ViewController.swift */,
+			);
+			path = RxTimelines;
+			sourceTree = "<group>";
+		};
 		C8093C471B8A72BE0088E94D /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
@@ -2726,6 +2754,7 @@
 		C8A56ACD1AD7424700B4673B = {
 			isa = PBXGroup;
 			children = (
+				B5B926F91DFEE0FE004FA38D /* RxTimelines */,
 				C85B01711DB2ACF2006043C3 /* Platform */,
 				C8D2C1501D4F3CD6006E2431 /* Rx.playground */,
 				C8093C471B8A72BE0088E94D /* RxSwift */,
@@ -4261,6 +4290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5B927071DFEE0FE004FA38D /* ViewController.swift in Sources */,
 				C8093D591B8A72BE0088E94D /* Observable+Creation.swift in Sources */,
 				C8093CCB1B8A72BE0088E94D /* ConnectableObservableType.swift in Sources */,
 				C83D73BC1C1DBAEE003DC470 /* InvocableScheduledItem.swift in Sources */,
@@ -4323,6 +4353,7 @@
 				CB883B401BE24C15000AC2EE /* RefCountDisposable.swift in Sources */,
 				C83100641BF7D51600AAE3CD /* Sequence.swift in Sources */,
 				C8093D351B8A72BE0088E94D /* Sample.swift in Sources */,
+				B5B927011DFEE0FE004FA38D /* Board.swift in Sources */,
 				C84CC54E1BDCF48200E06A64 /* LockOwnerType.swift in Sources */,
 				C8FA89151C30405400CD3A17 /* VirtualTimeScheduler.swift in Sources */,
 				D285BAC41BC0231000B3F602 /* SkipUntil.swift in Sources */,
@@ -4364,11 +4395,15 @@
 				C8093D2B1B8A72BE0088E94D /* ObserveOnSerialDispatchQueue.swift in Sources */,
 				C8093D3D1B8A72BE0088E94D /* StartWith.swift in Sources */,
 				C821DBA21BA4DCAB008F3809 /* Buffer.swift in Sources */,
+				B5B927031DFEE0FE004FA38D /* RxTimeline.swift in Sources */,
 				B1D8998F1BF653410027B05C /* Timeout.swift in Sources */,
+				B5B927061DFEE0FE004FA38D /* UIBezier+Arrow.swift in Sources */,
 				C8093D471B8A72BE0088E94D /* TakeWhile.swift in Sources */,
 				C8093CFF1B8A72BE0088E94D /* Amb.swift in Sources */,
 				C8093D1B1B8A72BE0088E94D /* Do.swift in Sources */,
 				C8093D9D1B8A72BE0088E94D /* SerialDispatchQueueScheduler.swift in Sources */,
+				B5B927041DFEE0FE004FA38D /* TimelineCircleView.swift in Sources */,
+				B5B927051DFEE0FE004FA38D /* TimelineView.swift in Sources */,
 				C8093D331B8A72BE0088E94D /* RefCount.swift in Sources */,
 				C8093D0D1B8A72BE0088E94D /* Concat.swift in Sources */,
 				CDDEF16A1D4FB40000CA8546 /* Disposables.swift in Sources */,
@@ -4380,6 +4415,7 @@
 				C8093CF31B8A72BE0088E94D /* Errors.swift in Sources */,
 				C86B0A561D735CCC005D8A16 /* Delay.swift in Sources */,
 				C8093D131B8A72BE0088E94D /* Debug.swift in Sources */,
+				B5B927021DFEE0FE004FA38D /* RxSupportCode.swift in Sources */,
 				C86781781DB8129E00B2029A /* PriorityQueue.swift in Sources */,
 				CB883B4A1BE369AA000AC2EE /* AddRef.swift in Sources */,
 				C8093D2F1B8A72BE0088E94D /* Producer.swift in Sources */,
