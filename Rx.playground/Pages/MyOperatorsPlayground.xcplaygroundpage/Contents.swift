@@ -6,8 +6,7 @@ public enum MyError: Error {
 }
 
 /*:
- ## CombineLatest & Zip
- Pytanie: Jak łączone będą wyniki
+ ## CombineLatest & Zip part 1
  */
 
 typealias CombiningClosure = (
@@ -46,6 +45,10 @@ example("My zip ex1 14dec2016") {
     }
     combiningEx1(combineOrZip: combineOrZip)
 }
+
+/*:
+ ## CombineLatest & Zip part 2
+ */
 
 func combiningEx2(combineOrZip: CombiningClosure) {
     let disposeBag = DisposeBag()
@@ -100,8 +103,6 @@ example("My nil disposable 18dec2016") {
     subject.onNext(2)
     subject.onCompleted()
     subject.onNext(3)
-    
-    //RunLoop.current.run(until: Date().addingTimeInterval(0.05))
 }
 
 /*:
@@ -114,28 +115,30 @@ example("My nil disposable 18dec2016") {
 example("RxExample:concat") {
     let disposeBag = DisposeBag()
     
-    let subject1 = BehaviorSubject(value: "🍎")
-    let subject2 = BehaviorSubject(value: "🐶")
+    let subjectDigits = BehaviorSubject(value: "1")
+    let subjectStrings = BehaviorSubject(value: "A")
     
-    let variable = Variable(subject1)
+    let variable = Variable(subjectDigits)
     
     variable.asObservable()
+        .debug()
+//        .merge()
         .concat()
         .subscribe { print($0) }
         .addDisposableTo(disposeBag)
     
-    subject1.onNext("🍐")
-    subject1.onNext("🍊")
+    subjectDigits.onNext("2🍐")
+    subjectDigits.onNext("3🍊")
     
-    variable.value = subject2
+    variable.value = subjectStrings
     
-    subject2.onNext("🐖?")
-    subject2.onNext("🐇?")
-    subject2.onNext("🐱?")
+    subjectStrings.onNext("B🐖?")
+    subjectStrings.onNext("C🐇?")
+    subjectDigits.onNext("4🥝")
+    subjectStrings.onNext("D🐱?")
+    subjectDigits.onCompleted()
     
-    subject1.onCompleted()
-    
-    subject2.onNext("🐭")
+    subjectStrings.onNext("E🐭")
 }
 
 /*:
@@ -169,7 +172,7 @@ example("Slack: scotegg 13dec2016") {
 /*:
  ## Scan, ToArray
  Pytania:
- 1.
+ 1. Jaki wynik dostaniemy kiedy zamienimy scan toArray na
  
  public static IObservable<Tuple<TSource, TSource>>
  PairWithPrevious<TSource>(this IObservable<TSource> source) {
@@ -189,6 +192,7 @@ example("My scan & toArray 18dec2016") {
         .scan([String](), accumulator: { (acc, val) -> [String] in
             return acc + [val]
         })
+//        .toArray()
         .asObservable()
         .subscribe(onNext: { print( $0)},
                    onError: { print( "Error \($0)")})

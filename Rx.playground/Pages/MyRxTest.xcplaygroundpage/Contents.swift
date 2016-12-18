@@ -3,8 +3,7 @@ import RxCocoa
 import RxTest
 
 /*:
- ## Conca (cold + hot)
- Pytania:
+ ## Concat (cold + hot)
  }
  */
 
@@ -12,24 +11,24 @@ example("Concat cold") {
     let scheduler = TestScheduler(initialClock: 0)
     
     let xs1 = scheduler.createColdObservable([
-        next(210, 1),
-        next(220, 2),
-        next(230, 3),
-        completed(240),
+        next(10, 1),
+        next(20, 2),
+        next(30, 3),
+        completed(40),
         ])
     
     let xs2 = scheduler.createColdObservable([
-        next(27, 4),
-        next(214, 5),
-        completed(221),
+        next(7, 10),
+        next(14, 20),
+        completed(21),
         ])
     
     let xs3 = scheduler.createColdObservable([
-        next(203, 6),
-        next(206, 7),
-        next(209, 8),
-        next(212, 9),
-        completed(215)
+        next(3, 100),
+        next(6, 200),
+        next(9, 300),
+        next(12, 400),
+        completed(15)
         ])
     
     let res = scheduler.start {
@@ -46,24 +45,24 @@ example("Concat hot") {
     let scheduler = TestScheduler(initialClock: 0)
     
     let xs1 = scheduler.createHotObservable([
-        next(10, 1),
-        next(20, 2),
-        next(30, 3),
-        completed(40),
+        next(205, 1),
+        next(220, 2),
+        next(235, 3),
+        completed(250),
         ])
     
     let xs2 = scheduler.createHotObservable([
-        next(7, 4),
-        next(14, 5),
-        completed(21),
+        next(257, 40),
+        next(264, 50),
+        completed(271),
         ])
     
-    let xs3 = scheduler.createColdObservable([
-        next(3, 6),
-        next(6, 7),
-        next(9, 8),
-        next(12, 9),
-        completed(15)
+    let xs3 = scheduler.createHotObservable([
+        next(274, 600),
+        next(277, 700),
+        next(280, 800),
+        next(283, 900),
+        completed(286)
         ])
     
     let res = scheduler.start {
@@ -96,12 +95,12 @@ func testCombineLatest_Typical2() {
     
     let e0 = scheduler.createHotObservable([
         Recorded(time: 240, value: .next(1)),
-        Recorded(time: 270, value: .next(12)),
+        Recorded(time: 270, value: .next(2)),
         ])
     
     let e1 = scheduler.createHotObservable([
         Recorded(time: 250, value: .next(10)),
-        Recorded(time: 260, value: .next(10)),
+        Recorded(time: 260, value: .next(20)),
         ])
     
     let res = scheduler.start { () -> Observable<[Int]> in
