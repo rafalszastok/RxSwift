@@ -15,12 +15,12 @@ typealias CombiningClosure = (
     (Observable<String>, Observable<String>)
     -> Observable<String>)
 
-func combiningEx1(combiningClosure: CombiningClosure) {
+func combiningEx1(combineOrZip: CombiningClosure) {
     let disposeBag = DisposeBag()
     let subjectLetters = PublishSubject<String>()
     let subjectDigits = PublishSubject<String>()
     
-    let combined = combiningClosure(subjectLetters.asObservable(),
+    let combined = combineOrZip(subjectLetters.asObservable(),
                                     subjectDigits.asObservable())
     combined.subscribe(onNext: { print( $0)})
     subjectLetters.onNext("A")
@@ -35,25 +35,25 @@ func combiningEx1(combiningClosure: CombiningClosure) {
 }
 
 example("My combineLatest ex1 14dec2016") {
-    let combiningClosure: CombiningClosure = {
+    let combineOrZip: CombiningClosure = {
         Observable.combineLatest($0, $1, resultSelector: {$0 + $1})
     }
-    combiningEx1(combiningClosure: combiningClosure)
+    combiningEx1(combineOrZip: combineOrZip)
 }
 
 example("My zip ex1 14dec2016") {
-    let combiningClosure: CombiningClosure = {
+    let combineOrZip: CombiningClosure = {
         Observable.zip($0, $1, resultSelector: {$0 + $1})
     }
-    combiningEx1(combiningClosure: combiningClosure)
+    combiningEx1(combineOrZip: combineOrZip)
 }
 
-func combiningEx2(combiningClosure: CombiningClosure) {
+func combiningEx2(combineOrZip: CombiningClosure) {
     let disposeBag = DisposeBag()
     let subjectLetters = PublishSubject<String>()
     let subjectDigits = PublishSubject<String>()
     
-    let combined = combiningClosure(subjectLetters.asObservable(),
+    let combined = combineOrZip(subjectLetters.asObservable(),
                                     subjectDigits.asObservable())
     combined.subscribe(onNext: { print( $0)},
                        onError: { print( "Error \($0)")})
@@ -65,46 +65,46 @@ func combiningEx2(combiningClosure: CombiningClosure) {
     subjectLetters.onNext("B")
 }
 
-example("My combineLatest ex1 14dec2016") {
-    let combiningClosure: CombiningClosure = {
+example("My combineLatest ex2 14dec2016") {
+    let combineOrZip: CombiningClosure = {
         Observable.combineLatest($0, $1, resultSelector: {$0 + $1})
     }
-    combiningEx2(combiningClosure: combiningClosure)
+    combiningEx2(combineOrZip: combineOrZip)
 }
 
-example("My zip ex1 14dec2016") {
-    let combiningClosure: CombiningClosure = {
+example("My zip ex2 14dec2016") {
+    let combineOrZip: CombiningClosure = {
         Observable.zip($0, $1, resultSelector: {$0 + $1})
     }
-    combiningEx2(combiningClosure: combiningClosure)
+    combiningEx2(combineOrZip: combineOrZip)
 }
 
 /*:
- Replay example
+ ## dispose
+ Pytania:
+ 1. Co zostanie wypisane na ekran?
+ 2. co zostanie wypisane na ekran, gdy odkomentujemy disposable.dispose()?
  */
 
-example("My replay 13dec2016") {
-    let disposeBag = DisposeBag()
-    let subject = PublishSubject<Int>()
-    let observable = subject
-        .asObservable()
-        .replay(2)
-    delay(2, closure: {
-        observable
-            .connect()
-    })
+example("My nil disposable 18dec2016") {
     
-    observable
-        .subscribe(onNext: {
-            print($0)
-        })
-        .addDisposableTo(disposeBag)
+    
+    let subject = PublishSubject<Int>()
+    let disposable = subject
+        .subscribe(onNext: { print("Next: \($0)")},
+                   onCompleted: { print("Completed") },
+                   onDisposed: { print("Disposed")})
+    
+    
     subject.onNext(1)
+    //disposable.dispose()
     subject.onNext(2)
-    delay(3, closure: {
-        subject.onNext(3)
-    })
+    subject.onCompleted()
+    subject.onNext(3)
+    
+    //RunLoop.current.run(until: Date().addingTimeInterval(0.05))
 }
+
 /*:
  ## Concat
  Pytania:
@@ -133,8 +133,8 @@ example("RxExample:concat") {
     subject2.onNext("🐖?")
     subject2.onNext("🐇?")
     subject2.onNext("🐱?")
-    subject1.onCompleted()
     
+    subject1.onCompleted()
     
     subject2.onNext("🐭")
 }
@@ -142,9 +142,6 @@ example("RxExample:concat") {
 /*:
  ## asDriver problem
  Pytanie: Co zostanie wypisane na ekran?
- Wykonujemy dispose na subject zanim wszystkie zdarzenia zostaną wykonane.
- Driver przełącza schedulera na MainScheduler (main dispatch queue).
- Wynik otrzymamy w kolejnym przejściu.
  */
 
 example("Slack: scotegg 13dec2016") {
@@ -153,12 +150,10 @@ example("Slack: scotegg 13dec2016") {
     
     let subject = PublishSubject<Int>()
     subject
-        //                .catchErrorJustReturn(100)
         .asDriver(onErrorRecover: { (error) in
             print("Error:", error)
             return Driver.just(1000)
         })
-        //        .debug()
         .drive(onNext: {
             print($0)
         })
@@ -169,5 +164,40 @@ example("Slack: scotegg 13dec2016") {
     subject.onError(MyError.test)
     
     subject.onNext(3)
-    //    RunLoop.current.run(until: Date().addingTimeInterval(0.1))
+    //RunLoop.current.run(until: Date().addingTimeInterval(0.05))
+}
+
+/*:
+ ## Scan, ToArray
+ Pytania:
+ 1.
+ 
+ public static IObservable<Tuple<TSource, TSource>>
+ PairWithPrevious<TSource>(this IObservable<TSource> source) {
+ return source.Scan(
+ Tuple.Create(default(TSource), default(TSource)),
+ (acc, current) => Tuple.Create(acc.Item2, current));
+ }
+ */
+
+
+example("My scan & toArray 18dec2016") {
+    let disposeBag = DisposeBag()
+    
+    let subjectLetters = PublishSubject<String>()
+    subjectLetters
+        .catchErrorJustReturn("ERR")
+        .scan([String](), accumulator: { (acc, val) -> [String] in
+            return acc + [val]
+        })
+        .asObservable()
+        .subscribe(onNext: { print( $0)},
+                   onError: { print( "Error \($0)")})
+        .addDisposableTo(disposeBag)
+    subjectLetters.onNext("A")
+    subjectLetters.onNext("B")
+    subjectLetters.onNext("C")
+    subjectLetters.onError(MyError.test)
+    subjectLetters.onNext("D")
+    subjectLetters.onCompleted()
 }
