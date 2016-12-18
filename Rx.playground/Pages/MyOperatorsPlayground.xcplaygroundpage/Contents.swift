@@ -1,6 +1,5 @@
 import RxSwift
 import RxCocoa
-import RxTest
 
 public enum MyError: Error {
     case test
