@@ -6,18 +6,17 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxCocoa
 import RxSwift
 import XCTest
 
 extension RxTest {
-    func ensurePropertyDeallocated<C, T: Equatable>(_ createControl: () -> C, _ initialValue: T, _ propertySelector: (C) -> ControlProperty<T>) where C: NSObject {
+    func ensurePropertyDeallocated<C, T: Equatable>(_ createControl: () -> C, _ initialValue: T, file: StaticString = #file, line: UInt = #line, _ propertySelector: (C) -> ControlProperty<T>) where C: NSObject {
 
-        ensurePropertyDeallocated(createControl, initialValue, comparer: ==, propertySelector)
+        ensurePropertyDeallocated(createControl, initialValue, comparer: ==, file: file, line: line, propertySelector)
     }
 
-    func ensurePropertyDeallocated<C, T>(_ createControl: () -> C, _ initialValue: T, comparer: (T, T) -> Bool, _ propertySelector: (C) -> ControlProperty<T>) where C: NSObject  {
+    func ensurePropertyDeallocated<C, T>(_ createControl: () -> C, _ initialValue: T, comparer: (T, T) -> Bool, file: StaticString = #file, line: UInt = #line, _ propertySelector: (C) -> ControlProperty<T>) where C: NSObject  {
 
         let variable = Variable(initialValue)
 
@@ -30,7 +29,7 @@ extension RxTest {
 
             let property = propertySelector(control)
 
-            let disposable = variable.asObservable().bindTo(property)
+            let disposable = variable.asObservable().bind(to: property)
 
             _ = property.subscribe(onNext: { n in
                 lastReturnedPropertyValue = n
@@ -58,16 +57,16 @@ extension RxTest {
         CFRunLoopWakeUp(runLoop)
         CFRunLoopRun()
 
-        XCTAssertTrue(deallocated)
-        XCTAssertTrue(completed)
-        XCTAssertTrue(comparer(initialValue, lastReturnedPropertyValue))
+        XCTAssertTrue(deallocated, "property not deallocated", file: file, line: line)
+        XCTAssertTrue(completed, "property not completed", file: file, line: line)
+        XCTAssertTrue(comparer(initialValue, lastReturnedPropertyValue), "last property value (\(lastReturnedPropertyValue)) does not match initial value (\(initialValue))", file: file, line: line)
     }
 
-    func ensureEventDeallocated<C, T>(_ createControl: @escaping () -> C, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
-        return ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), Disposables.create()) }, eventSelector)
+    func ensureEventDeallocated<C, T>(_ createControl: @escaping () -> C, file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
+        return ensureEventDeallocated({ () -> (C, Disposable) in (createControl(), Disposables.create()) }, file: file, line: line, eventSelector)
     }
 
-    func ensureEventDeallocated<C, T>(_ createControl: () -> (C, Disposable), _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
+    func ensureEventDeallocated<C, T>(_ createControl: () -> (C, Disposable), file: StaticString = #file, line: UInt = #line, _ eventSelector: (C) -> ControlEvent<T>) where C: NSObject {
         var completed = false
         var deallocated = false
         let outerDisposable = SingleAssignmentDisposable()
@@ -90,11 +89,11 @@ extension RxTest {
         }
 
         outerDisposable.dispose()
-        XCTAssertTrue(deallocated)
-        XCTAssertTrue(completed)
+        XCTAssertTrue(deallocated, "event not deallocated", file: file, line: line)
+        XCTAssertTrue(completed, "event not completed", file: file, line: line)
     }
 
-    func ensureControlObserverHasWeakReference<C, T>( _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>)) where C: NSObject {
+    func ensureControlObserverHasWeakReference<C, T>( _ createControl: @autoclosure() -> (C), _ observerSelector: (C) -> AnyObserver<T>, _ observableSelector: () -> (Observable<T>), file: StaticString = #file, line: UInt = #line) where C: NSObject {
         var deallocated = false
 
         let disposeBag = DisposeBag()
@@ -104,13 +103,13 @@ extension RxTest {
             let propertyObserver = observerSelector(control)
             let observable = observableSelector()
 
-            observable.bindTo(propertyObserver).addDisposableTo(disposeBag)
+            observable.bind(to: propertyObserver).disposed(by: disposeBag)
 
             _ = (control as NSObject).rx.deallocated.subscribe(onNext: { _ in
                 deallocated = true
             })
         }
 
-        XCTAssertTrue(deallocated)
+        XCTAssertTrue(deallocated, "control observer reference is over-retained", file: file, line: line)
     }
 }

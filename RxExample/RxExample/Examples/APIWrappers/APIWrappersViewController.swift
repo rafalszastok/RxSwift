@@ -66,7 +66,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UIBarButtonItem Tapped")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         // MARK: UISegmentedControl
 
@@ -78,31 +78,26 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UISegmentedControl value \(x)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
 
         // MARK: UISwitch
 
-        /*
         // also test two way binding
         let switchValue = Variable(true)
-        /***⚠️Unlike other controls, Apple is reusing instances of UISwitch or a there is a leak,
-        so underlying observable sequence won't complete when nothing holds a strong reference
-        to UISwitch.⚠️***/
-        (switcher.rx.value <-> switchValue).addDisposableTo(disposeBag)
+        _ = switcher.rx.value <-> switchValue
 
         switchValue.asObservable()
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UISwitch value \(x)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         // MARK: UIActivityIndicatorView
 
         switcher.rx.value
-            .bindTo(activityIndicator.rx.animating)
-            .addDisposableTo(disposeBag)
-        */
+            .bind(to: activityIndicator.rx.isAnimating)
+            .disposed(by: disposeBag)
 
         // MARK: UIButton
 
@@ -110,7 +105,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UIButton Tapped")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
 
         // MARK: UISlider
@@ -123,7 +118,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UISlider value \(x)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
 
         // MARK: UIDatePicker
@@ -137,7 +132,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UIDatePicker date \(x)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
 
         // MARK: UITextField
@@ -150,7 +145,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UITextField text \(x)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
 
         // MARK: UIGestureRecognizer
@@ -159,7 +154,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UIGestureRecognizer event \(x.state)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
 
         // MARK: UITextView
@@ -172,7 +167,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { [weak self] x in
                 self?.debug("UITextView text \(x)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         // MARK: CLLocationManager
 
@@ -184,7 +179,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { x in
                 print("rx.didUpdateLocations \(x)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
 
         _ = manager.rx.didFailWithError
             .subscribe(onNext: { x in
@@ -195,7 +190,7 @@ class APIWrappersViewController: ViewController {
             .subscribe(onNext: { status in
                 print("Authorization status \(status)")
             })
-            .addDisposableTo(disposeBag)
+            .disposed(by: disposeBag)
         
         manager.startUpdatingLocation()
 

@@ -6,14 +6,12 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
-
 import RxSwift
 import RxCocoa
 import UIKit
 import XCTest
 
-class UISearchBarTests : RxTest {
+final class UISearchBarTests : RxTest {
 }
 
 extension UISearchBarTests {
@@ -21,6 +19,11 @@ extension UISearchBarTests {
     func testText_completesOnDealloc() {
         let createView: () -> UISearchBar = { self.newSearchBar() }
         ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx.text.orEmpty }
+    }
+
+    func testValue_completesOnDealloc() {
+        let createView: () -> UISearchBar = { self.newSearchBar() }
+        ensurePropertyDeallocated(createView, "a") { (view: UISearchBar) in view.rx.value.orEmpty }
     }
 
     func testText_changeEventWorks() {
@@ -45,7 +48,7 @@ extension UISearchBarTests {
         let searchBar = self.newSearchBar()
 
         XCTAssertNotEqual(searchBar.text, "value")
-        _ = Observable.just("value").bindTo(searchBar.rx.text)
+        _ = Observable.just("value").bind(to: searchBar.rx.text)
         XCTAssertEqual(searchBar.text, "value")
     }
 
@@ -77,7 +80,7 @@ extension UISearchBarTests {
         searchBar.scopeButtonTitles = [ "One", "Two", "Three" ]
         
         XCTAssertNotEqual(searchBar.selectedScopeButtonIndex, 1)
-        _ = Observable.just(1).bindTo(searchBar.rx.selectedScopeButtonIndex)
+        _ = Observable.just(1).bind(to: searchBar.rx.selectedScopeButtonIndex)
         XCTAssertEqual(searchBar.selectedScopeButtonIndex, 1)
     }
     

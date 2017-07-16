@@ -82,7 +82,7 @@ let subscription/*: Disposable */ = primeTextField.rx.text      // type is Obser
             .map { WolframAlphaIsPrime(Int($0) ?? 0) }          // type is Observable<Observable<Prime>>
             .concat()                                           // type is Observable<Prime>
             .map { "number \($0.n) is prime? \($0.isPrime)" }   // type is Observable<String>
-            .bindTo(resultLabel.rx.text)                        // return Disposable that can be used to unbind everything
+            .bind(to: resultLabel.rx.text)                        // return Disposable that can be used to unbind everything
 
 // This will set `resultLabel.text` to "number 43 is prime? true" after
 // server call completes.
@@ -101,7 +101,7 @@ All of the operators used in this example are the same operators used in the fir
 If you are new to Rx, the next example will probably be a little overwhelming at first. However, it's here to demonstrate how RxSwift code looks in the real-world.
 
 This example contains complex async UI validation logic with progress notifications.
-All operations are cancelled the moment `disposeBag` is deallocated.
+All operations are canceled the moment `disposeBag` is deallocated.
 
 Let's give it a shot.
 
@@ -174,7 +174,7 @@ self.usernameOutlet.rx.text
 // pending async operations.
 // Instead of doing it manually, which is tedious,
 // let's dispose everything automagically upon view controller dealloc.
-    .addDisposableTo(disposeBag)
+    .disposed(by: disposeBag)
 ```
 
 It doesn't get any simpler than that. There are [more examples](../RxExample) in the repository, so feel free to check them out.

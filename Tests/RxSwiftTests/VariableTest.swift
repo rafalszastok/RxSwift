@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import XCTest
 import RxSwift
 
@@ -76,7 +75,7 @@ class VariableTest : RxTest {
         // Sequence elements are usually never enumerated like this.
         // Sequences are usually combined using map/filter/combineLatest ...
         //
-        // This will immediatelly print:
+        // This will immediately print:
         //      Next value of c = 3
         // because variables have initial values (starting element)
         var latestValueOfC : Int? = nil

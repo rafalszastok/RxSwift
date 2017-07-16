@@ -6,7 +6,6 @@
 //  Copyright © 2015 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 #if !RX_NO_MODULE
 import RxSwift
 import RxCocoa
@@ -95,7 +94,7 @@ class DefaultImageService: ImageService {
     In case there were some problems with network connectivity and image wasn't downloaded, automatic retry will be fired when networks becomes
     available.
      
-    After image is sucessfully downloaded, sequence is completed.
+    After image is successfully downloaded, sequence is completed.
     */
     func imageFromURL(_ url: URL, reachabilityService: ReachabilityService) -> Observable<DownloadableImage> {
         return _imageFromURL(url)

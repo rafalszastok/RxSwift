@@ -20,6 +20,9 @@
       location = "container:"
       name = "Podspecs">
       <FileRef
+         location = "group:RxTest.podspec">
+      </FileRef>
+      <FileRef
          location = "group:RxBlocking.podspec">
       </FileRef>
       <FileRef
@@ -28,19 +31,10 @@
       <FileRef
          location = "group:RxSwift.podspec">
       </FileRef>
-      <FileRef
-         location = "group:RxTest.podspec">
-      </FileRef>
    </Group>
    <Group
       location = "group:scripts"
       name = "scripts">
-      <FileRef
-         location = "group:update-jazzy-config.rb">
-      </FileRef>
-      <FileRef
-         location = "group:update-jazzy-docs.sh">
-      </FileRef>
       <FileRef
          location = "group:all-tests.sh">
       </FileRef>
@@ -82,9 +76,6 @@
          location = "group:HotAndColdObservables.md">
       </FileRef>
       <FileRef
-         location = "group:Linux.md">
-      </FileRef>
-      <FileRef
          location = "group:MathBehindRx.md">
       </FileRef>
       <FileRef
@@ -97,7 +88,7 @@
          location = "group:Subjects.md">
       </FileRef>
       <FileRef
-         location = "group:Units.md">
+         location = "group:Traits.md">
       </FileRef>
       <FileRef
          location = "group:Warnings.md">

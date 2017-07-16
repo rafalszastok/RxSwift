@@ -6,19 +6,23 @@
 //  Copyright © 2016 Krunoslav Zaher. All rights reserved.
 //
 
-import Foundation
 import RxCocoa
 import RxSwift
 import RxTest
 import XCTest
 
-class UISegmentedControlTests: RxTest {
+final class UISegmentedControlTests: RxTest {
     
 }
 
 extension UISegmentedControlTests {
-    func testSegmentedControl_DelegateEventCompletesOnDealloc() {
+    func testSegmentedControl_ValueCompletesOnDealloc() {
         let createView: () -> UISegmentedControl = { UISegmentedControl(items: ["a", "b", "c"]) }
         ensurePropertyDeallocated(createView, 1) { (view: UISegmentedControl) in view.rx.value }
+    }
+
+    func testSegmentedControl_SelectedSegmentIndexCompletesOnDealloc() {
+        let createView: () -> UISegmentedControl = { UISegmentedControl(items: ["a", "b", "c"]) }
+        ensurePropertyDeallocated(createView, 1) { (view: UISegmentedControl) in view.rx.selectedSegmentIndex }
     }
 }
