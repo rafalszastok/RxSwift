@@ -57,7 +57,9 @@ func combiningEx2(combineOrZip: CombiningClosure) {
     
     let combined = combineOrZip(subjectLetters.asObservable(),
                                     subjectDigits.asObservable())
-    combined.subscribe(onNext: { print( $0)},
+    combined
+        .catchErrorJustReturn("DUPA")
+        .subscribe(onNext: { print( $0)},
                        onError: { print( "Error \($0)")})
     subjectLetters.onNext("A")
     subjectDigits.onNext("1")
@@ -99,7 +101,7 @@ example("My nil disposable 18dec2016") {
     
     
     subject.onNext(1)
-    //disposable.dispose()
+    disposable.dispose()
     subject.onNext(2)
     subject.onCompleted()
     subject.onNext(3)
@@ -114,31 +116,36 @@ example("My nil disposable 18dec2016") {
  */
 example("RxExample:concat") {
     let disposeBag = DisposeBag()
-    
-    let subjectDigits = BehaviorSubject(value: "1")
-    let subjectStrings = BehaviorSubject(value: "A")
-    
-    let variable = Variable(subjectDigits)
-    
+
+    // Eventy, które nas interesują:
+    let subjectDigits = BehaviorSubject(value: "JABŁKO")
+    let subjectPoeci = BehaviorSubject(value: "Mickiewicz")
+    let subjectStrings = BehaviorSubject(value: "A🐶")
+
+    //
+    let variable: Variable<BehaviorSubject<String>> = Variable(subjectDigits)
+    let observables: Observable<BehaviorSubject<String>> = variable.asObservable()
+    let mergedObservables: Observable<String> = observables.merge()
     variable.asObservable()
-        .debug()
-//        .merge()
-        .concat()
+//        .debug("ID-A")
+        .merge()
+//        .concat()
         .subscribe { print($0) }
         .addDisposableTo(disposeBag)
     
-    subjectDigits.onNext("2🍐")
-    subjectDigits.onNext("3🍊")
-    
+    subjectDigits.onNext("GRUSZKA")
+    subjectDigits.onNext("PIETRUSZKA")
     variable.value = subjectStrings
-    
     subjectStrings.onNext("B🐖?")
     subjectStrings.onNext("C🐇?")
-    subjectDigits.onNext("4🥝")
-    subjectStrings.onNext("D🐱?")
+    subjectDigits.onNext("KIWI")
+    variable.value = subjectPoeci
+    subjectStrings.onNext("KOT?")
     subjectDigits.onCompleted()
     
-    subjectStrings.onNext("E🐭")
+    subjectStrings.onNext("MYSZ")
+    subjectStrings.onCompleted()
+    subjectPoeci.onNext("Słowacki")
 }
 
 /*:
@@ -146,12 +153,13 @@ example("RxExample:concat") {
  Pytanie: Co zostanie wypisane na ekran?
  */
 
-example("Slack: scotegg 13dec2016") {
+example("Slack: asDriver 13dec2016") {
     
     let disposeBag = DisposeBag()
     
     let subject = PublishSubject<Int>()
     subject
+//        .asDriver(onErrorJustReturn: 1000)
         .asDriver(onErrorRecover: { (error) in
             print("Error:", error)
             return Driver.just(1000)
@@ -166,7 +174,7 @@ example("Slack: scotegg 13dec2016") {
     subject.onError(MyError.test)
     
     subject.onNext(3)
-    //RunLoop.current.run(until: Date().addingTimeInterval(0.05))
+    RunLoop.current.run(until: Date().addingTimeInterval(0.05))
 }
 
 /*:
@@ -192,7 +200,7 @@ example("My scan & toArray 18dec2016") {
         .scan([String](), accumulator: { (acc, val) -> [String] in
             return acc + [val]
         })
-//        .toArray()
+        .toArray()
         .asObservable()
         .subscribe(onNext: { print( $0)},
                    onError: { print( "Error \($0)")})
