@@ -12,6 +12,8 @@ class ObamaCareClass {
     var disposeBag: DisposeBag! = DisposeBag()
     var disposable: Disposable!
     var observableProbe = ObservableProbe()
+    let dateFormatter = DateFormatter()
+    let randomString = "Al Capone"
 
     init () {
         observableProbe
@@ -19,26 +21,6 @@ class ObamaCareClass {
             .debug("ID:Probe", trimOutput: false)
             .subscribe()
             .addDisposableTo(__disposeBag)
-    }
-    func sampleWithPublish() {
-
-        let intSequence = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
-            .publish()
-
-        _ = intSequence
-            .subscribe(onNext: { print("Subscription 1:, Event: \($0)") })
-
-        delay(2) { _ = intSequence.connect() }
-
-        delay(4) {
-            _ = intSequence
-                .subscribe(onNext: { print("Subscription 2:, Event: \($0)") })
-        }
-
-        delay(6) {
-            _ = intSequence
-                .subscribe(onNext: { print("Subscription 3:, Event: \($0)") })
-        }
     }
 
     func testDisposeBag() {
@@ -59,8 +41,11 @@ class ObamaCareClass {
     func testDisposable() {
         let mockedService = PublishSubject<String>()
         disposable = mockedService
-            .debug("ID:Service", trimOutput: false)
-            .subscribe()
+            .subscribe(onNext: { [unowned self] (str) in
+                print("Event next \(str)")
+                print("RandomStr \(self.randomString)")
+
+            })
         delay(1, closure: {
             mockedService.on(.next("A"))
         })
@@ -98,13 +83,17 @@ class ObamaCareClass {
             mockedService.on(.next("B"))
         })
     }
+    deinit {
+        dateFormatter.dateFormat = "yyyy/MM/dd hh:mm:ss:SSS"
+        print("\(dateFormatter.string(from: Date())): DEINIT CALLED")
+    }
 }
 
 var instance: ObamaCareClass! = ObamaCareClass()
-instance.testDisposeBagTrackActivity()
+//instance.testDisposeBag()
+instance.testDisposable()
+//instance.testDisposeBagTrackActivity()
+//instance.testDisposableTrackActivity()
 delay(2) { () in
     instance = nil
 }
-//disposeBag()
-//disposablee()
-//disposeBagTrackActivity()
