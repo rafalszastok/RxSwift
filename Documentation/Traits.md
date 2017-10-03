@@ -379,11 +379,11 @@ Any observable sequence can be converted to `Driver` trait, as long as it satisf
 
 So how do you make sure those properties are satisfied? Just use normal Rx operators. `asDriver(onErrorJustReturn: [])` is equivalent to following code.
 
-```
+```swift
 let safeSequence = xs
   .observeOn(MainScheduler.instance)       // observe events on main scheduler
   .catchErrorJustReturn(onErrorJustReturn) // can't error out
-  .shareReplayLatestWhileConnected         // side effects sharing
+  .shareReplayLatestWhileConnected()       // side effects sharing
 return Driver(raw: safeSequence)           // wrap it up
 ```
 

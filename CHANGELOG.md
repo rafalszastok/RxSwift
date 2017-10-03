@@ -5,15 +5,49 @@ All notable changes to this project will be documented in this file.
 
 ## Master
 
-* Adds `modelDeleted` to `UITableView`
-* Adds `itemHighlighted` to `UICollectionView`
-* Adds `itemUnhighlighted` to `UICollectionView`
-* Adds `willDisplayCell` to `UICollectionView`
-* Adds `didEndDisplayingCell` to `UICollectionView`
-* Adds `willDisplaySupplementaryView` to `UICollectionView`
-* Adds `didEndDisplayingSupplementaryView` to `UICollectionView`
+* Adds `UIScrollView.willEndDragging` extension. #1365
+* Adds `materialize()` operator for RxBlocking's `BlockingObservable`. #1383
+* Adds `first` operator to ObservableType.
+
+## [3.6.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.1)
 
 #### Anomalies
+
+* Fixes compilation issue with Xcode 9b3. #1341
+* Fixes issues with `andThen` operator. #1347
+* Improves locking behavior of `merge` and `switch` operators. #1344
+
+## [3.6.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.6.0)
+
+* Adds `timeout` operator to `PrimitiveSequence` (`Single`, `Maybe`, `Observable`)
+* Adds `delay` operator to `SharedSequence`.
+* Adds `andThen` operator to `Completeable`.
+* Adds `concat` operator to `Completeable`.
+* Adds `RxPickerViewDataSourceType`
+* Adds `UIPickerView` extensions:
+    * `modelSelected`
+    * `itemTitles`
+    * `itemAttributedTitles`
+    * `items`
+* Adds `UITableView` extensions:
+    * `modelDeleted`
+* Adds `UICollectionView` extensions:
+    * `itemHighlighted`
+    * `itemUnhighlighted`
+    * `willDisplayCell`
+    * `didEndDisplayingCell`
+    * `willDisplaySupplementaryView`
+    * `didEndDisplayingSupplementaryView`
+* Adds `UIScrollView` extensions:
+    * `willBeginDecelerating`
+    * `willBeginDragging`
+    * `willBeginZooming`
+    * `didEndZooming`
+
+#### Anomalies
+
+* Fixes deadlock anomaly in `shareReplayWhileLatest`. #1323
+* Removes duplicated events swallowing in `NSControl` on macOS.
 
 ## [3.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/3.5.0)
 
@@ -221,7 +255,7 @@ All notable changes to this project will be documented in this file.
 * Fixes code example in comments of RxTableViewExtensions that didn't compile. #947
 * Adds `.swift-version` to help package managers to detect Swift 3 version.
 
-## [3.0.0-rc.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
+## [3.0.0-rc.1](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-rc.1) (Xcode 8 / Swift 3.0 compatible)
 
 * Renames `RxTests` library to `RxTest` because of problems with Swift Package Manager.
 * Adds Swift Package Manager support
@@ -257,7 +291,7 @@ text.drive(label.rx.text)
 * Renames scheduler init param `globalConcurrentQueueQOS` to `qos` and removes custom enum wrapper.
 * Adds setter to `rx` property to enable mutation of base object.
 
-## [3.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.1) (Xcode 8 / Swift 3.0 compatible)
+## [3.0.0-beta.2](https://github.com/ReactiveX/RxSwift/releases/tag/3.0.0-beta.2) (Xcode 8 / Swift 3.0 compatible)
 
 * Subscription disposables now only create strong references to sinks until being disposed or sequence terminates. #573
 

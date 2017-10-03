@@ -36,36 +36,43 @@ extension Reactive where Base: NSControl {
                 }
                 
                 return observer
-            }.takeUntil(self.deallocated)
+            }
+			.takeUntil(self.deallocated)
+			.share()
         }
-        
+
         return ControlEvent(events: source)
     }
 
     /// You might be wondering why the ugly `as!` casts etc, well, for some reason if
     /// Swift compiler knows C is UIControl type and optimizations are turned on, it will crash.
-    static func value<C: AnyObject, T: Equatable>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
+    static func value<C: AnyObject, T>(_ control: C, getter: @escaping (C) -> T, setter: @escaping (C, T) -> Void) -> ControlProperty<T> {
         MainScheduler.ensureExecutingOnScheduler()
 
-        let source = (control as! NSObject).rx.lazyInstanceObservable(&rx_value_key) { () -> Observable<T> in
-            return Observable.create { [weak weakControl = control] (observer: AnyObserver<T>) in
+        let source = (control as! NSObject).rx.lazyInstanceObservable(&rx_value_key) { () -> Observable<Void> in
+            return Observable.create { [weak weakControl = control] (observer: AnyObserver<Void>) in
                 guard let control = weakControl else {
                     observer.on(.completed)
                     return Disposables.create()
                 }
 
-                observer.on(.next(getter(control)))
+                observer.on(.next(()))
 
                 let observer = ControlTarget(control: control as! NSControl) { _ in
-                    if let control = weakControl {
-                        observer.on(.next(getter(control)))
+                    if weakControl != nil {
+                        observer.on(.next(()))
                     }
                 }
-                
+				
                 return observer
             }
-            .takeUntil((control as! NSObject).rx.deallocated)
-        }
+			.takeUntil((control as! NSObject).rx.deallocated)
+			.share(replay: 1, scope: .whileConnected)
+		}
+            .flatMap { [weak control] _ -> Observable<T> in
+                guard let control = control else { return Observable.empty() }
+                return Observable.just(getter(control))
+            }
 
         let bindingObserver = UIBindingObserver(UIElement: control, binding: setter)
 

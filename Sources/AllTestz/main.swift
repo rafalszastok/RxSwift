@@ -56,6 +56,7 @@ final class AnomaliesTest_ : AnomaliesTest, RxTestCase {
     static var allTests: [(String, (AnomaliesTest_) -> () -> ())] { return [
     ("test936", AnomaliesTest.test936),
     ("test1323", AnomaliesTest.test1323),
+    ("test1344", AnomaliesTest.test1344),
     ("testSeparationBetweenOnAndSubscriptionLocks", AnomaliesTest.testSeparationBetweenOnAndSubscriptionLocks),
     ] }
 }
@@ -138,6 +139,14 @@ final class PrimitiveSequenceTest_ : PrimitiveSequenceTest, RxTestCase {
     ("testSingle_retryWhen2_producesSingleElement", PrimitiveSequenceTest.testSingle_retryWhen2_producesSingleElement),
     ("testSingle_timer_producesSingleElement", PrimitiveSequenceTest.testSingle_timer_producesSingleElement),
     ("testSingle_using_producesSingleElement", PrimitiveSequenceTest.testSingle_using_producesSingleElement),
+    ("testSingle_timeout", PrimitiveSequenceTest.testSingle_timeout),
+    ("testSingle_timeout_other", PrimitiveSequenceTest.testSingle_timeout_other),
+    ("testMaybe_timeout", PrimitiveSequenceTest.testMaybe_timeout),
+    ("testMaybe_timeout_other", PrimitiveSequenceTest.testMaybe_timeout_other),
+    ("testCompletable_timeout", PrimitiveSequenceTest.testCompletable_timeout),
+    ("testCompletable_timeout_other", PrimitiveSequenceTest.testCompletable_timeout_other),
+    ("testCompletable_timeout_succeeds", PrimitiveSequenceTest.testCompletable_timeout_succeeds),
+    ("testCompletable_timeout_other_succeeds", PrimitiveSequenceTest.testCompletable_timeout_other_succeeds),
     ("testAsSingle_Empty", PrimitiveSequenceTest.testAsSingle_Empty),
     ("testAsSingle_One", PrimitiveSequenceTest.testAsSingle_One),
     ("testAsSingle_Many", PrimitiveSequenceTest.testAsSingle_Many),
@@ -145,6 +154,11 @@ final class PrimitiveSequenceTest_ : PrimitiveSequenceTest, RxTestCase {
     ("testAsSingle_Error2", PrimitiveSequenceTest.testAsSingle_Error2),
     ("testAsSingle_subscribeOnSuccess", PrimitiveSequenceTest.testAsSingle_subscribeOnSuccess),
     ("testAsSingle_subscribeOnError", PrimitiveSequenceTest.testAsSingle_subscribeOnError),
+    ("testFirst_Empty", PrimitiveSequenceTest.testFirst_Empty),
+    ("testFirst_One", PrimitiveSequenceTest.testFirst_One),
+    ("testFirst_Many", PrimitiveSequenceTest.testFirst_Many),
+    ("testFirst_ManyWithoutCompletion", PrimitiveSequenceTest.testFirst_ManyWithoutCompletion),
+    ("testFirst_Error", PrimitiveSequenceTest.testFirst_Error),
     ("testAsMaybe_Empty", PrimitiveSequenceTest.testAsMaybe_Empty),
     ("testAsMaybe_One", PrimitiveSequenceTest.testAsMaybe_One),
     ("testAsMaybe_Many", PrimitiveSequenceTest.testAsMaybe_Many),
@@ -229,6 +243,10 @@ final class ObservableBlockingTest_ : ObservableBlockingTest, RxTestCase {
     ("testSingle_independent", ObservableBlockingTest.testSingle_independent),
     ("testSingle_timeout", ObservableBlockingTest.testSingle_timeout),
     ("testSinglePredicate_timeout", ObservableBlockingTest.testSinglePredicate_timeout),
+    ("testMaterialize_empty", ObservableBlockingTest.testMaterialize_empty),
+    ("testMaterialize_empty_fail", ObservableBlockingTest.testMaterialize_empty_fail),
+    ("testMaterialize_someData", ObservableBlockingTest.testMaterialize_someData),
+    ("testMaterialize_someData_fail", ObservableBlockingTest.testMaterialize_someData_fail),
     ] }
 }
 
@@ -461,16 +479,20 @@ final class CompletableAndThenTest_ : CompletableAndThenTest, RxTestCase {
     #endif
 
     static var allTests: [(String, (CompletableAndThenTest_) -> () -> ())] { return [
+    ("testCompletableEmpty_CompletableCompleted", CompletableAndThenTest.testCompletableEmpty_CompletableCompleted),
     ("testCompletableCompleted_CompletableCompleted", CompletableAndThenTest.testCompletableCompleted_CompletableCompleted),
     ("testCompletableError_CompletableCompleted", CompletableAndThenTest.testCompletableError_CompletableCompleted),
     ("testCompletableCompleted_CompletableError", CompletableAndThenTest.testCompletableCompleted_CompletableError),
+    ("testCompletableEmpty_SingleCompleted", CompletableAndThenTest.testCompletableEmpty_SingleCompleted),
     ("testCompletableCompleted_SingleNormal", CompletableAndThenTest.testCompletableCompleted_SingleNormal),
     ("testCompletableError_SingleNormal", CompletableAndThenTest.testCompletableError_SingleNormal),
     ("testCompletableCompleted_SingleError", CompletableAndThenTest.testCompletableCompleted_SingleError),
+    ("testCompletableEmpty_MaybeCompleted", CompletableAndThenTest.testCompletableEmpty_MaybeCompleted),
     ("testCompletableCompleted_MaybeNormal", CompletableAndThenTest.testCompletableCompleted_MaybeNormal),
     ("testCompletableError_MaybeNormal", CompletableAndThenTest.testCompletableError_MaybeNormal),
     ("testCompletableCompleted_MaybeError", CompletableAndThenTest.testCompletableCompleted_MaybeError),
     ("testCompletableCompleted_MaybeEmpty", CompletableAndThenTest.testCompletableCompleted_MaybeEmpty),
+    ("testCompletableEmpty_ObservableCompleted", CompletableAndThenTest.testCompletableEmpty_ObservableCompleted),
     ("testCompletableCompleted_ObservableNormal", CompletableAndThenTest.testCompletableCompleted_ObservableNormal),
     ("testCompletableError_ObservableNormal", CompletableAndThenTest.testCompletableError_ObservableNormal),
     ("testCompletableCompleted_ObservableError", CompletableAndThenTest.testCompletableCompleted_ObservableError),
@@ -488,6 +510,20 @@ final class RecursiveLockTests_ : RecursiveLockTests, RxTestCase {
     static var allTests: [(String, (RecursiveLockTests_) -> () -> ())] { return [
     ("testSynchronizes", RecursiveLockTests.testSynchronizes),
     ("testIsReentrant", RecursiveLockTests.testIsReentrant),
+    ] }
+}
+
+final class ObservableEnumeratedTest_ : ObservableEnumeratedTest, RxTestCase {
+    #if os(macOS)
+    required override init() {
+        super.init()
+    }
+    #endif
+
+    static var allTests: [(String, (ObservableEnumeratedTest_) -> () -> ())] { return [
+    ("test_Infinite", ObservableEnumeratedTest.test_Infinite),
+    ("test_Completed", ObservableEnumeratedTest.test_Completed),
+    ("test_Error", ObservableEnumeratedTest.test_Error),
     ] }
 }
 
@@ -568,6 +604,7 @@ final class DriverTest_ : DriverTest, RxTestCase {
     ("testAsDriver_withLatestFromDefaultOverload", DriverTest.testAsDriver_withLatestFromDefaultOverload),
     ("testAsDriver_skip", DriverTest.testAsDriver_skip),
     ("testAsDriver_startWith", DriverTest.testAsDriver_startWith),
+    ("testAsDriver_delay", DriverTest.testAsDriver_delay),
     ("testAsDriver_interval", DriverTest.testAsDriver_interval),
     ("testAsDriver_timer", DriverTest.testAsDriver_timer),
     ("testDriveObserver", DriverTest.testDriveObserver),
@@ -1808,6 +1845,7 @@ func XCTMain(_ tests: [() -> ()]) {
         testCase(DisposableTest_.allTests),
         testCase(CompletableAndThenTest_.allTests),
         testCase(RecursiveLockTests_.allTests),
+        testCase(ObservableEnumeratedTest_.allTests),
         testCase(QueueTest_.allTests),
         testCase(ObservableSequenceTest_.allTests),
         testCase(DriverTest_.allTests),

@@ -27,7 +27,6 @@ custom_categories:
   - LockOwnerType
   - SynchronizedDisposeType
   - SynchronizedOnType
-  - SynchronizedSubscribeType
   - SynchronizedUnsubscribeType
 - name: RxSwift/Disposables
   children:
@@ -72,8 +71,10 @@ custom_categories:
   - Do
   - ElementAt
   - Empty
+  - Enumerated
   - Error
   - Filter
+  - First
   - Generate
   - GroupBy
   - Just
@@ -140,7 +141,6 @@ custom_categories:
   - CurrentThreadScheduler
   - HistoricalScheduler
   - HistoricalSchedulerTimeConverter
-  - ImmediateScheduler
   - MainScheduler
   - OperationQueueScheduler
   - RecursiveScheduler
@@ -150,7 +150,6 @@ custom_categories:
   - VirtualTimeScheduler
 - name: RxSwift/Schedulers/Internal
   children:
-  - AnonymousInvocable
   - DispatchQueueConfiguration
   - InvocableScheduledItem
   - InvocableType
@@ -198,6 +197,7 @@ custom_categories:
 - name: RxCocoa/iOS/DataSources
   children:
   - RxCollectionViewReactiveArrayDataSource
+  - RxPickerViewAdapter
   - RxTableViewReactiveArrayDataSource
 - name: RxCocoa/iOS/Events
   children:
@@ -241,12 +241,14 @@ custom_categories:
 - name: RxCocoa/iOS/Protocols
   children:
   - RxCollectionViewDataSourceType
+  - RxPickerViewDataSourceType
   - RxTableViewDataSourceType
 - name: RxCocoa/iOS/Proxies
   children:
   - RxCollectionViewDataSourceProxy
   - RxCollectionViewDelegateProxy
   - RxNavigationControllerDelegateProxy
+  - RxPickerViewDataSourceProxy
   - RxPickerViewDelegateProxy
   - RxScrollViewDelegateProxy
   - RxSearchBarDelegateProxy
