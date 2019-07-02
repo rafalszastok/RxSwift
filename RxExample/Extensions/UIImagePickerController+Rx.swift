@@ -9,10 +9,8 @@
 
 #if os(iOS)
     
-#if !RX_NO_MODULE
     import RxSwift
     import RxCocoa
-#endif
     import UIKit
 
     extension Reactive where Base: UIImagePickerController {
@@ -20,11 +18,11 @@
         /**
          Reactive wrapper for `delegate` message.
          */
-        public var didFinishPickingMediaWithInfo: Observable<[String : AnyObject]> {
+        public var didFinishPickingMediaWithInfo: Observable<[UIImagePickerController.InfoKey : AnyObject]> {
             return delegate
                 .methodInvoked(#selector(UIImagePickerControllerDelegate.imagePickerController(_:didFinishPickingMediaWithInfo:)))
                 .map({ (a) in
-                    return try castOrThrow(Dictionary<String, AnyObject>.self, a[1])
+                    return try castOrThrow(Dictionary<UIImagePickerController.InfoKey, AnyObject>.self, a[1])
                 })
         }
 
