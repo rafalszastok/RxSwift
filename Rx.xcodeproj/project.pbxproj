@@ -32,7 +32,6 @@
 		271A97441CFC9F7B00D64125 /* UIViewController+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */; };
 		4583D8231FE94BBA00AA1BB1 /* Recorded+Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583D8211FE94BB100AA1BB1 /* Recorded+Event.swift */; };
 		4613456F1D9A4467001ABAF2 /* UIWebView+RxTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */; };
-		4613457C1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */; };
 		46307D4E1CDE77D800E47A1C /* UIAlertAction+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */; };
 		4C5213AA225D41E60079FC77 /* CompactMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5213A9225D41E60079FC77 /* CompactMap.swift */; };
 		4C5213AE225E224F0079FC77 /* Observable+CompactMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C5213AB225E20350079FC77 /* Observable+CompactMapTests.swift */; };
@@ -169,7 +168,6 @@
 		C8165AD521891DBF00494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165AD421891DBE00494BEF /* AtomicInt.swift */; };
 		C8165AD621891DBF00494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165AD421891DBE00494BEF /* AtomicInt.swift */; };
 		C8165AD721891DBF00494BEF /* AtomicInt.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8165AD421891DBE00494BEF /* AtomicInt.swift */; };
-		C81772981E7F408100EA679B /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81772971E7F408100EA679B /* Deprecated.swift */; };
 		C81A097D1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81A097C1E6C27A100900B3B /* Observable+ZipTests.swift */; };
 		C81A097E1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81A097C1E6C27A100900B3B /* Observable+ZipTests.swift */; };
 		C81A097F1E6C27A100900B3B /* Observable+ZipTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C81A097C1E6C27A100900B3B /* Observable+ZipTests.swift */; };
@@ -950,7 +948,6 @@
 		271A97421CFC99FE00D64125 /* UIViewController+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+RxTests.swift"; sourceTree = "<group>"; };
 		4583D8211FE94BB100AA1BB1 /* Recorded+Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Recorded+Event.swift"; sourceTree = "<group>"; };
 		4613456E1D9A4467001ABAF2 /* UIWebView+RxTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIWebView+RxTests.swift"; sourceTree = "<group>"; };
-		4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxWebViewDelegateProxy.swift; sourceTree = "<group>"; };
 		46307D4D1CDE77D800E47A1C /* UIAlertAction+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIAlertAction+Rx.swift"; sourceTree = "<group>"; };
 		4C5213A9225D41E60079FC77 /* CompactMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompactMap.swift; sourceTree = "<group>"; };
 		4C5213AB225E20350079FC77 /* Observable+CompactMapTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+CompactMapTests.swift"; sourceTree = "<group>"; };
@@ -1055,7 +1052,6 @@
 		C8165ACA21891BBF00494BEF /* AtomicInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicInt.swift; sourceTree = "<group>"; };
 		C8165ACC21891BE400494BEF /* AtomicInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicInt.swift; sourceTree = "<group>"; };
 		C8165AD421891DBE00494BEF /* AtomicInt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AtomicInt.swift; sourceTree = "<group>"; };
-		C81772971E7F408100EA679B /* Deprecated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
 		C81A097C1E6C27A100900B3B /* Observable+ZipTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Observable+ZipTests.swift"; sourceTree = "<group>"; };
 		C81A09801E6C6B2400900B3B /* Deprecated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
 		C81A09861E6C702700900B3B /* PrimitiveSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.swift; path = PrimitiveSequence.swift; sourceTree = "<group>"; tabWidth = 4; };
@@ -1767,7 +1763,6 @@
 				C86781901DB823B500B2029A /* macOS */,
 				C89AB22B1DAAC3A60065FBE6 /* Runtime */,
 				C8093E9D1B8A732E0088E94D /* Info.plist */,
-				C81772971E7F408100EA679B /* Deprecated.swift */,
 			);
 			path = RxCocoa;
 			sourceTree = "<group>";
@@ -2257,7 +2252,6 @@
 				846436E11C9AF64C0035B40D /* RxSearchControllerDelegateProxy.swift */,
 				844BC8AA1CE4FA5600F5C7CB /* RxPickerViewDelegateProxy.swift */,
 				D9080ACD1EA05A16002B433B /* RxNavigationControllerDelegateProxy.swift */,
-				4613457B1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift */,
 				A520FFFB1F0D291500573734 /* RxPickerViewDataSourceProxy.swift */,
 			);
 			path = Proxies;
@@ -3020,7 +3014,6 @@
 				A5CD038A1F1660F40005A376 /* RxPickerViewAdapter.swift in Sources */,
 				C89AB2021DAAC3350065FBE6 /* KVORepresentable+CoreGraphics.swift in Sources */,
 				C80D338F1B91EF9E0014629D /* Observable+Bind.swift in Sources */,
-				C81772981E7F408100EA679B /* Deprecated.swift in Sources */,
 				C88254311B8A752B00B02D69 /* UISegmentedControl+Rx.swift in Sources */,
 				AAE623761C82475700FC7801 /* UIProgressView+Rx.swift in Sources */,
 				271A97411CFC996B00D64125 /* UIViewController+Rx.swift in Sources */,
@@ -3060,7 +3053,6 @@
 				C882541A1B8A752B00B02D69 /* RxCollectionViewDataSourceType.swift in Sources */,
 				C8A81CA01E05E82C0008DEF4 /* DispatchQueue+Extensions.swift in Sources */,
 				C88254351B8A752B00B02D69 /* UITextField+Rx.swift in Sources */,
-				4613457C1D9A4AEE001ABAF2 /* RxWebViewDelegateProxy.swift in Sources */,
 				C88254301B8A752B00B02D69 /* UISearchBar+Rx.swift in Sources */,
 				C89AB2121DAAC3350065FBE6 /* NotificationCenter+Rx.swift in Sources */,
 				C88254181B8A752B00B02D69 /* ItemEvents.swift in Sources */,
